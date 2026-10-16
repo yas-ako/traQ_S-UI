@@ -4,8 +4,9 @@
    * @type {import('../config').Config}
    */
   const config = {
-    enableQall: true,
-    enableSearch: true,
+    name: 'traQ Thread Prototype',
+    enableQall: false,
+    enableSearch: false,
     isRootChannelSelectableAsParentChannel: false
   }
 

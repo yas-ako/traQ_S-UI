@@ -1,6 +1,7 @@
 /// <reference types="vitest" />
 import * as path from 'path'
 import fs from 'fs'
+import { Agent as HttpAgent } from 'http'
 import { Agent as HttpsAgent } from 'https'
 
 import VuePlugin from '@vitejs/plugin-vue'
@@ -14,7 +15,9 @@ import { DEV_SERVER_PROXY_HOST } from './dev.config'
 import packageJson from './package.json'
 import webManifest from './webmanifest'
 
-const keepAliveAgent = new HttpsAgent({ keepAlive: true })
+const keepAliveAgent = DEV_SERVER_PROXY_HOST.startsWith('https:')
+  ? new HttpsAgent({ keepAlive: true })
+  : new HttpAgent({ keepAlive: true })
 
 const localhostCerts =
   fs.existsSync('.certs/localhost.crt') && fs.existsSync('.certs/localhost.key')
@@ -35,16 +38,15 @@ export default defineConfig(({ mode }) => ({
   server: {
     port: 8080,
     proxy: {
-      '/api/v3': {
+      '/api': {
         target: DEV_SERVER_PROXY_HOST,
         changeOrigin: true,
         ws: true,
         agent: keepAliveAgent
       },
-      '/api/auth': {
+      '/.well-known': {
         target: DEV_SERVER_PROXY_HOST,
         changeOrigin: true,
-        ws: true,
         agent: keepAliveAgent
       }
     },

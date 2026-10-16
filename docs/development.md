@@ -2,8 +2,22 @@
 
 実行には Node.js が必要です
 
+
 ```shell
-$ npm i
+$ mise trust
+$ mise install
+$ mise run setup
+$ mise run dev
+```
+
+開発サーバーは通常 `http://localhost:8080` で起動します。
+
+バックエンドは別途 `http://localhost:3005` で起動してください。接続先は `dev.config.ts` で変更できます。
+
+### mise を使わない場合
+
+```shell
+$ npm ci
 $ npm run gen-fonts
 ```
 

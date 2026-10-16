@@ -1,0 +1,19 @@
+[tools]
+node = "26.8.2"
+
+[tasks.setup]
+description = "依存関係をインストールし、フォントを生成する"
+env.CYPRESS_INSTALL_BINARY = "0"
+run = ["npm ci", "npm run gen-fonts"]
+
+[tasks.dev]
+description = "ローカルバックエンドに接続する開発サーバーを起動する"
+run = "npm run dev --"
+
+[tasks.build]
+description = "フォントを含めて公開用ファイルをビルドする"
+run = "npm run build:may-with-font"
+
+[tasks.check]
+description = "型チェック・lint・ユニットテストを実行する"
+run = ["npm run type-check", "npm run lint:no-fix", "npm run test:unit"]
